@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Passage d’un geste</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+
+
+
+    <h1>Définis les vidéos</h1>
+
+
+
+    <!-- Section de la vidéo -->
+
+    <div id="video-container">
+
+        <video width="600" controls>
+
+            <source src="video1.mp4" type="video/mp4">
+
+            Ton navigateur ne supporte pas la balise vidéo.
+
+        </video>
+
+    </div>
+
+
+
+    <!-- Zone de texte et bouton -->
+
+    <div id="definition-section">
+
+        <input type="text" id="definition-input" placeholder="Décris ce que tu vois...">
+
+        <button onclick="saveDefinition()">Enregistrer la description</button>
+
+    </div>
+
+
+
+    <!-- Affichage des descriptions -->
+
+    <h2>Descriptions enregistrées :</h2>
+
+    <ul id="definitions-list"></ul>
+
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
