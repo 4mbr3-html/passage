@@ -35,12 +35,6 @@
             cursor: pointer;
         }
 
-        #message {
-            margin-top: 20px;
-            font-size: 20px;
-            color: green;
-        }
-        
     </style>
 
        <nav>
@@ -66,9 +60,6 @@
     </div>
 
     <h2>Liste des mots validés : <span id="validatedWords"></span></h2>
-
-        <div id="message"></div> <!-- Zone pour afficher le message -->
-
 
     <script>
         // Liste des vidéos à afficher, remplace par les liens Google Drive
@@ -118,12 +109,6 @@
                 changeVideo(); // Mettre à jour la vidéo
                 wordInput.value = ""; // Réinitialiser la zone de texte
 
-                // Vérifier si c'est la dernière vidéo
-                if (currentVideoIndex === 0) {
-                    document.getElementById("message").textContent = "Toutes les vidéos ont été visionnées !"; // Afficher le message
-                }
-
-                
             } else {
                 alert("Veuillez entrer un mot.");
             }
