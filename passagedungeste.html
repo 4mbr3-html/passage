@@ -66,13 +66,10 @@
     <!-- Iframe pour afficher les vidéos YouTube -->
     <iframe id="video-player" src="https://www.youtube.com/embed/PARgeNswNJM?rel=0&controls=0&modestbranding=1" frameborder="0" allowfullscreen></iframe>
 
- 
-
-           <!-- Formulaire Google Forms intégré -->
-        <form action="https://forms.gle/G9rdAFrg42UEfzgQA" method="POST" target="hidden_iframe" onsubmit="return submitWord()">
-            <input type="text" name="entry.YOUR_ENTRY_ID" id="wordInput" placeholder="Entrez un mot">
-            <button type="submit">Entrer</button>
-        </form>
+    <div>
+        <input type="text" id="wordInput" placeholder="Entrez un mot">
+        <button onclick="submitWord()">Entrer</button>
+    </div>
 
     <script>
         // Liste des vidéos YouTube
