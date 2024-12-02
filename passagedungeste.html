@@ -26,7 +26,7 @@
         input[type="text"] {
             padding: 10px;
             font-size: 16px;
-            width: 220px;
+            width: 30%;
         }
         button {
             padding: 10px 20px;
@@ -58,6 +58,7 @@
         <button onclick="submitWord()">Valider et passer à la vidéo suivante</button>
     </div>
 
+    <h2>Liste des mots validés : <span id="validatedWords"></span></h2>
 
     <script>
         // Liste des vidéos à afficher, remplace par les liens Google Drive
@@ -86,8 +87,8 @@
             
         ];
 
-      
         let currentVideoIndex = 0; // Index de la vidéo actuelle
+        const validatedWords = []; // Liste des mots validés
 
         // Fonction pour changer la vidéo dans l'iframe
         function changeVideo() {
@@ -95,14 +96,13 @@
             iframe.src = videos[currentVideoIndex];
         }
 
-        // Fonction pour envoyer le mot et associer à la vidéo
+        // Fonction pour valider le mot et passer à la vidéo suivante
         function submitWord() {
             const wordInput = document.getElementById("wordInput");
             const word = wordInput.value.trim();
-
             if (word !== "") {
-                // Envoie le mot à la feuille Google Sheets via le script Google Apps
-                sendToGoogleSheets(word, currentVideoIndex);
+                validatedWords.push(word); // Ajouter le mot à la liste
+                document.getElementById("validatedWords").textContent = validatedWords.join(", "); // Afficher les mots validés
 
                 // Passer à la vidéo suivante
                 currentVideoIndex = (currentVideoIndex + 1) % videos.length;
@@ -111,27 +111,6 @@
             } else {
                 alert("Veuillez entrer un mot.");
             }
-        }
-
-        // Fonction pour envoyer les données vers Google Sheets via le script Google Apps
-        function sendToGoogleSheets(word, videoIndex) {
-            const url = "https://script.google.com/macros/s/AKfycbwSvGpJGIqx6faQhdjM0e53l0cipJ9IKVkXbYVBzGdLTi74xpcRwq7tUYCqQNNV3WZnNQ/exec";
-
-            // Paramètres envoyés via l'URL
-            const data = {
-                "mot": word,               // Le mot à enregistrer
-                "videoIndex": videoIndex   // L'index de la vidéo associée
-            };
-
-            // Envoie des données via une requête GET
-            fetch(url + `?mot=${encodeURIComponent(word)}&videoIndex=${videoIndex}`)
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Réponse du serveur:', data); // Affiche la réponse du script
-                })
-                .catch(error => {
-                    console.error('Erreur:', error); // Affiche l'erreur s'il y en a
-                });
         }
     </script>
 
