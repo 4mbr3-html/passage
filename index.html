@@ -38,6 +38,27 @@
             margin: 20px;
         }
 
+            .star {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall 3s infinite linear;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0.2;
+            }
+        }
+
         footer {
             position: fixed;
             left: 0;
@@ -65,6 +86,28 @@
         Désolé, votre navigateur ne supporte pas les iframes.
     </iframe>
 
+ <script>
+        // Fonction pour créer des étoiles aléatoires
+        function createStar() {
+            const star = document.createElement('div');
+            star.classList.add('star');
+
+            // Positionner l'étoile aléatoirement sur l'écran
+            star.style.left = `${Math.random() * window.innerWidth}px`;
+
+            // L'ajouter au body
+            document.body.appendChild(star);
+
+            // Délai avant de supprimer l'étoile (pour ne pas trop surcharger la page)
+            setTimeout(() => {
+                star.remove();
+            }, 3000); // Durée de l'animation (en millisecondes)
+        }
+
+        // Créer des étoiles toutes les 100ms
+        setInterval(createStar, 100);
+    </script>
+    
         <!-- Footer -->
     <footer>
         Ambre Guidicelli © ArTeC 2024
