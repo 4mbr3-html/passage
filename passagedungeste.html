@@ -114,6 +114,22 @@
                 alert("Veuillez entrer un mot avant de continuer.");
             }
         }
+
+
+    function sendWordToSheet(word) {
+            const scriptURL = "https://script.google.com/macros/s/AKfycbxldBG0HIFBRqHpVySL1eE-5vbAPpdVh8lnkhAmmyoRjSuBOElgrrH_lSaLJ37ksxZCbw/exec"; // Remplacez par votre URL Apps Script
+
+            fetch(scriptURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ word: word })
+            })
+            .then(response => response.json())
+            .then(data => console.log("Mot enregistré:", data))
+            .catch(error => console.error("Erreur:", error));
+        }
+
+        
     </script>
     
     <footer>
