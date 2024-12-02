@@ -101,9 +101,6 @@
                 console.log(`Mot validé : ${word}`); // Vous pouvez ici connecter une API ou une base de données
                 wordInput.value = ""; // Réinitialise l'entrée utilisateur
                 
-          // Envoi du mot et de l'ID de la vidéo à Google Sheets
-                sendWordToSheet(word, videoId);
-                
                 // Passe à la vidéo suivante
                 currentVideoIndex = (currentVideoIndex + 1) % videos.length;
 
