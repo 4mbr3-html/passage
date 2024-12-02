@@ -26,7 +26,7 @@
         input[type="text"] {
             padding: 10px;
             font-size: 16px;
-            width: 180px;
+            width: 220px;
         }
         button {
             padding: 10px 20px;
@@ -58,7 +58,15 @@
         <button onclick="submitWord()">Valider et passer à la vidéo suivante</button>
     </div>
 
-    <h2>Liste des mots validés : <span id="validatedWords"></span></h2>
+    // Fonction pour envoyer les données au script Google Apps
+function sendToGoogleSheets(word) {
+    const url = "https://script.google.com/macros/s/AKfycbxldBG0HIFBRqHpVySL1eE-5vbAPpdVh8lnkhAmmyoRjSuBOElgrrH_lSaLJ37ksxZCbw/exec"; // L'URL du script
+
+    const data = {
+        "mot": word,         // Paramètre pour le mot
+        "videoIndex": currentVideoIndex // Paramètre pour l'index de la vidéo
+    };
+   
 
     <script>
         // Liste des vidéos à afficher, remplace par les liens Google Drive
