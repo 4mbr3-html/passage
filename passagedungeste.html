@@ -97,14 +97,15 @@
             const wordInput = document.getElementById("wordInput");
             const word = wordInput.value.trim();
 
-            if (word !== "") {
-                console.log(`Mot validé : ${word}`); // Vous pouvez ici connecter une API ou une base de données
-                wordInput.value = ""; // Réinitialise l'entrée utilisateur
-                
-                // Passe à la vidéo suivante
-                currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+             if (word !== "") {
+                console.log(`Mot validé : ${word}`);
+                wordInput.value = "";
 
-                // Affiche un message si toutes les vidéos ont été visionnées
+                // Envoi du mot et de l'ID de la vidéo à Google Sheets
+                sendWordToSheet(word, videoId);
+
+                // Passer à la vidéo suivante
+                currentVideoIndex = (currentVideoIndex + 1) % videos.length;
                 if (currentVideoIndex === 0) {
                     alert("Toutes les vidéos ont été visionnées.");
                 }
