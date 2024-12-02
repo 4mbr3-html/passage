@@ -108,6 +108,12 @@
             iframe.src = videos[currentVideoIndex];
         }
 
+        function changeVideo() {
+    console.log("Vidéo actuelle : " + currentVideoIndex); // Affiche l'index actuel de la vidéo
+    const iframe = document.getElementById("video-player");
+    iframe.src = videos[currentVideoIndex];
+}
+
         // Fonction pour valider le mot et passer à la vidéo suivante
         function submitWord() {
             const wordInput = document.getElementById("wordInput");
