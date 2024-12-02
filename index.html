@@ -8,10 +8,18 @@
 
     <script type="text/javascript">
         var motDePasse = "p4ss4g3"; // Le mot de passe ici
-        var utilisateur = prompt("Entrez le mot de passe:");
-        if (utilisateur !== motDePasse) {
-            alert("Mot de passe incorrect");
-            window.location.href = "index.html"; // Redirection si mot de passe incorrect
+        
+        // Vérifier si le mot de passe a déjà été validé
+        if (localStorage.getItem("motDePasseValide") !== "true") {
+            var utilisateur = prompt("Entrez le mot de passe:");
+            
+            if (utilisateur !== motDePasse) {
+                alert("Mot de passe incorrect");
+                window.location.href = "index.html"; // Redirection si mot de passe incorrect
+            } else {
+                // Si le mot de passe est correct, mémoriser la validation
+                localStorage.setItem("motDePasseValide", "true");
+            }
         }
     </script>
 
