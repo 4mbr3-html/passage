@@ -116,17 +116,20 @@
         }
 
 
-    function sendWordToSheet(word) {
-            const scriptURL = "https://script.google.com/macros/s/AKfycbxldBG0HIFBRqHpVySL1eE-5vbAPpdVh8lnkhAmmyoRjSuBOElgrrH_lSaLJ37ksxZCbw/exec"; // Remplacez par votre URL Apps Script
-
-            fetch(scriptURL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ word: word })
-            })
-            .then(response => response.json())
-            .then(data => console.log("Mot enregistré:", data))
-            .catch(error => console.error("Erreur:", error));
+     // Envoie le mot et l'ID de la vidéo à Google Sheets
+        async function sendWordToSheet(word, videoId) {
+            const scriptURL = "https://script.google.com/macros/s/AKfycbyEAJy_lWfuYoHTQOrYdf6AzooMZ4VhT6HP6fxB-6U5SfHuDsgKu1KQMMHGEQUq4U_Nng/exec"; // Remplacez par votre URL Apps Script
+            try {
+                const response = await fetch(scriptURL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ videoId: videoId, word: word })
+                });
+                const result = await response.json();
+                console.log("Données enregistrées:", result);
+            } catch (error) {
+                console.error("Erreur d'enregistrement:", error);
+            }
         }
 
         
