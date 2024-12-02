@@ -5,6 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>start</title>
+
+    <script type="text/javascript">
+        var motDePasse = "p4ss4g3"; // Le mot de passe ici
+        var utilisateur = prompt("Entrez le mot de passe:");
+        if (utilisateur !== motDePasse) {
+            alert("Mot de passe incorrect");
+            window.location.href = "index.html"; // Redirection si mot de passe incorrect
+        }
+    </script>
+
+    
     <style>
 
         nav {
