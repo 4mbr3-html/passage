@@ -103,9 +103,6 @@
                 console.log(`Mot validé : ${word}`);
                 wordInput.value = "";
 
-                // Envoi du mot et de l'ID de la vidéo à Google Sheets
-                sendWordToSheet(word, videoId);
-
                 // Passer à la vidéo suivante
                 currentVideoIndex = (currentVideoIndex + 1) % videos.length;
                 if (currentVideoIndex === 0) {
@@ -117,27 +114,6 @@
                 alert("Veuillez entrer un mot avant de continuer.");
             }
         }
-
-
-     // Envoie le mot et l'ID de la vidéo à Google Sheets
-async function sendWordToSheet(word, videoId) {
-    const scriptURL = "https://script.google.com/macros/s/AKfycbyVaqWsyc0pxhgo6TXKjHTatUq2s6zNJAqRaWg95hkR1BtWW7QMcMDaOc-5xwADUfwSug/exec"; // Remplacez par votre URL Apps Script
-    try {
-        const response = await fetch(scriptURL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ word: word, videoId: videoId }),
-    mode: 'no-cors'  // Permet de contourner la politique CORS, mais aucune réponse n'est récupérée
-})
-.then(response => console.log("Mot enregistré"))
-.catch(error => console.error("Erreur:", error));
-
-    }
-}
-
-
-        
-
         
     </script>
     
