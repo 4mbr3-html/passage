@@ -4,10 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>passage d'un geste</title>
-<link rel="stylesheet" type="text/css" href="https://build.cargo.site/frontend/5e1510/css/front-end/cargo-static.css">
-		<link rel="stylesheet" type="text/css" href="https://build.cargo.site/frontend/5e1510/index.css">
-		<script>!function(){function e(e,o,t){!1===e.prototype.hasOwnProperty(name)&&(e.prototype[o]=t)}e(Node,"saveable",!1),e(Node,"setSaveable",function(e){return this.saveable=e,this}),e(Node,"isSaveable",function(){return this.saveable}),Node.prototype.persistCloneNode=function(){var s=function(e,o,t){for(var i=0;i<e.childNodes.length;i++)t(e.childNodes[i],o.childNodes[i]),0<e.childNodes[i].childNodes.length&&s(e.childNodes[i],o.childNodes[i],t)},e=Node.prototype.cloneNode.apply(this,arguments);return this.isSaveable&&!0===this.isSaveable()&&e.setSaveable(!0),0<this.childNodes.length&&s(this,e,function(e,o){e.isSaveable&&!0===e.isSaveable()&&o.setSaveable(!0)}),e},this.core={markAsEditable:function(e){}}}(window.CargoEditor=window.CargoEditor||{});</script>
-	
+<style>
+    nav ul {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+    }
+
+    nav ul li {
+        display: inline;
+    }
+
+    nav ul li a {
+        text-decoration: none;
+        color: blue;
+        font-weight: bold;
+    }
+
+    nav ul li a:hover {
+        color: darkblue;
+    }
+</style>
 </head>
 <body>
     
