@@ -58,15 +58,6 @@
         <button onclick="submitWord()">Valider et passer à la vidéo suivante</button>
     </div>
 
-    // Fonction pour envoyer les données au script Google Apps
-function sendToGoogleSheets(word) {
-    const url = "https://script.google.com/macros/s/AKfycbxldBG0HIFBRqHpVySL1eE-5vbAPpdVh8lnkhAmmyoRjSuBOElgrrH_lSaLJ37ksxZCbw/exec"; // L'URL du script
-
-    const data = {
-        "mot": word,         // Paramètre pour le mot
-        "videoIndex": currentVideoIndex // Paramètre pour l'index de la vidéo
-    };
-   
 
     <script>
         // Liste des vidéos à afficher, remplace par les liens Google Drive
@@ -95,8 +86,8 @@ function sendToGoogleSheets(word) {
             
         ];
 
+      
         let currentVideoIndex = 0; // Index de la vidéo actuelle
-        const validatedWords = []; // Liste des mots validés
 
         // Fonction pour changer la vidéo dans l'iframe
         function changeVideo() {
@@ -104,13 +95,14 @@ function sendToGoogleSheets(word) {
             iframe.src = videos[currentVideoIndex];
         }
 
-        // Fonction pour valider le mot et passer à la vidéo suivante
+        // Fonction pour envoyer le mot et associer à la vidéo
         function submitWord() {
             const wordInput = document.getElementById("wordInput");
             const word = wordInput.value.trim();
+
             if (word !== "") {
-                validatedWords.push(word); // Ajouter le mot à la liste
-                document.getElementById("validatedWords").textContent = validatedWords.join(", "); // Afficher les mots validés
+                // Envoie le mot à la feuille Google Sheets via le script Google Apps
+                sendToGoogleSheets(word, currentVideoIndex);
 
                 // Passer à la vidéo suivante
                 currentVideoIndex = (currentVideoIndex + 1) % videos.length;
@@ -119,6 +111,27 @@ function sendToGoogleSheets(word) {
             } else {
                 alert("Veuillez entrer un mot.");
             }
+        }
+
+        // Fonction pour envoyer les données vers Google Sheets via le script Google Apps
+        function sendToGoogleSheets(word, videoIndex) {
+            const url = "https://script.google.com/macros/s/AKfycbxldBG0HIFBRqHpVySL1eE-5vbAPpdVh8lnkhAmmyoRjSuBOElgrrH_lSaLJ37ksxZCbw/exec";
+
+            // Paramètres envoyés via l'URL
+            const data = {
+                "mot": word,               // Le mot à enregistrer
+                "videoIndex": videoIndex   // L'index de la vidéo associée
+            };
+
+            // Envoie des données via une requête GET
+            fetch(url + `?mot=${encodeURIComponent(word)}&videoIndex=${videoIndex}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Réponse du serveur:', data); // Affiche la réponse du script
+                })
+                .catch(error => {
+                    console.error('Erreur:', error); // Affiche l'erreur s'il y en a
+                });
         }
     </script>
 
