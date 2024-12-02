@@ -96,6 +96,8 @@
         function submitWord() {
             const wordInput = document.getElementById("wordInput");
             const word = wordInput.value.trim();
+            const videoId = videos[currentVideoIndex];  // Définir videoId ici
+
 
              if (word !== "") {
                 console.log(`Mot validé : ${word}`);
