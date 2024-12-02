@@ -71,6 +71,12 @@
         <button onclick="submitWord()">Entrer</button>
     </div>
 
+           <!-- Formulaire Google Forms intégré -->
+        <form action="https://docs.google.com/forms/d/e/1UpGxrS5BoOdj5irPVR7Z_KD6SSlyTj4kZuKI4EIvL24/formResponse" method="POST" target="hidden_iframe" onsubmit="return submitWord()">
+            <input type="text" name="entry.YOUR_ENTRY_ID" id="wordInput" placeholder="Entrez un mot">
+            <button type="submit">Entrer</button>
+        </form>
+
     <script>
         // Liste des vidéos YouTube
         const videos = [
