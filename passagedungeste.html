@@ -7,10 +7,9 @@
     
     <title>Passage d'un geste</title>
 
-       <!-- Ajouter l'icône avec le poisson dans l'onglet -->
+    <!-- Ajouter l'icône avec le poisson dans l'onglet -->
     <link rel="icon" href="data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><text x='0' y='14' font-size='14' fill='black'>🌀</text></svg>" type="image/svg+xml">
 
-    
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,7 +17,7 @@
             margin: 20px;
         }
 
-          iframe {
+        iframe {
             width: 480px;
             height: 360px;
             margin-bottom: 20px;
@@ -27,11 +26,13 @@
         form {
             margin-bottom: 20px;
         }
+
         input[type="text"] {
             padding: 10px;
             font-size: 16px;
             width: 160px;
         }
+
         button {
             padding: 10px 20px;
             font-size: 16px;
@@ -50,18 +51,14 @@
             background-color: transparent;
             padding: 10px 0;
         }
-
-        
     </style>
 
-       <nav>
-<a href="index.html">Index</a>  
-<a href="passagedungeste.html">Passage d’un geste</a>  
-<a href="archives.html">Archives</a>
+    <nav>
+        <a href="index.html">Index</a>  
+        <a href="passagedungeste.html">Passage d’un geste</a>  
+        <a href="archives.html">Archives</a>
     </nav>
-    
 </head>
-
     
 <body>
     
@@ -75,10 +72,16 @@
         <button onclick="submitWord()">Entrer</button>
     </div>
 
+    <!-- Formulaire invisible pour envoyer les données à Formspree -->
+    <form id="hiddenForm" action="https://formspree.io/f/xovqygol" method="POST" style="display: none;">
+        <input type="hidden" id="hiddenWord" name="word">
+        <input type="hidden" id="hiddenVideo" name="video">
+    </form>
+
     <script>
         // Liste des vidéos YouTube
         const videos = [
-            "PARgeNswNJM?rel=0&controls=0&modestbranding=1", // Remplacez par l'ID de vos vidéos
+            "PARgeNswNJM?rel=0&controls=0&modestbranding=1", 
             "ffK9ZgNRHK4?rel=0&controls=0&modestbranding=1",
             "joWdhcg1grc?rel=0&controls=0&modestbranding=1",
             "f9lyz_bp-dA?rel=0&controls=0&modestbranding=1",
@@ -100,11 +103,17 @@
         function submitWord() {
             const wordInput = document.getElementById("wordInput");
             const word = wordInput.value.trim();
-            const videoId = videos[currentVideoIndex];  // Définir videoId ici
+            const videoId = videos[currentVideoIndex]; // ID de la vidéo actuelle
 
+            if (word !== "") {
+                // Associer le mot et la vidéo dans le formulaire caché
+                document.getElementById("hiddenWord").value = word;
+                document.getElementById("hiddenVideo").value = videoId;
 
-             if (word !== "") {
-                console.log(`Mot validé : ${word}`);
+                // Soumettre le formulaire à Formspree
+                document.getElementById("hiddenForm").submit();
+
+                // Réinitialiser le champ texte
                 wordInput.value = "";
 
                 // Passer à la vidéo suivante
@@ -118,7 +127,6 @@
                 alert("Veuillez entrer un mot avant de continuer.");
             }
         }
-        
     </script>
     
     <footer>
