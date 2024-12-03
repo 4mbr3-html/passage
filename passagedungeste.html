@@ -132,6 +132,15 @@
                 alert("Veuillez entrer un mot avant de continuer.");
             }
         }
+
+        // Permettre d'activer le bouton avec "Entrée"
+        const wordInput = document.getElementById("wordInput");
+        wordInput.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                document.getElementById("submitButton").click();
+            }
+        });
+
         
     </script>
     
