@@ -68,7 +68,7 @@
         ça peut être un élément visuel, une atmosphère, un sentiment, n'importe quoi qui vous traverse l'esprit. . ݁₊ ⊹ . ݁˖ . ݁</p>
     
   <!-- Iframe pour afficher les vidéos Vimeo -->
-    <iframe id="video-player" src="https://player.vimeo.com/video/1038237547?background=1&loop=1&title=0&byline=0&portrait=0" frameborder="0" allowfullscreen></iframe>
+    <iframe id="video-player" src="https://player.vimeo.com/video/1038237547?loop=1&title=0&byline=0&portrait=0" frameborder="0" allowfullscreen></iframe>
 
     <div>
         <input type="text" id="wordInput" placeholder="Entrez un mot">
@@ -95,7 +95,7 @@
         // Fonction pour changer la vidéo
         function changeVideo() {
             const iframe = document.getElementById("video-player");
-            iframe.src = `https://player.vimeo.com/video/${videos[currentVideoIndex]}?background=1&loop=1&title=0&byline=0&portrait=0`;
+            iframe.src = `https://player.vimeo.com/video/${videos[currentVideoIndex]}?loop=1&title=0&byline=0&portrait=0`;
         }
 
         // Fonction pour envoyer les données à Google Apps Script
