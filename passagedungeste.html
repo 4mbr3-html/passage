@@ -129,18 +129,18 @@
             iframe.src = `https://player.vimeo.com/video/${shuffledVideos[currentVideoIndex]}?autoplay=1&loop=1&title=0&byline=0&portrait=0`;
         }
 
-   // Permet d'écouter la touche "Entrée" sur le champ texte ***
-     document.addEventListener("DOMContentLoaded", function() { 
+ // Écouter "Entrée" dans le champ texte et exécuter la fonction du bouton
+    document.addEventListener("DOMContentLoaded", function() { 
         const wordInput = document.getElementById("wordInput");
-        const submitButton = document.getElementById("submitButton");
 
         wordInput.addEventListener("keydown", function(event) {
             if (event.key === "Enter") { // Vérifie si "Entrée" est pressée
                 event.preventDefault(); // Empêche le comportement par défaut
-                submitButton.click(); // Simule un clic sur le bouton
+                submitWord(); // Appelle directement la fonction du bouton
             }
         });
     });
+
         
         // Fonction pour envoyer les données à Google Apps Script
         function submitWord() {
