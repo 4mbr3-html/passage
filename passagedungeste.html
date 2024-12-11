@@ -90,19 +90,29 @@
             "1038242493"
         ];
 
+        let shuffledVideos = shuffleArray([...videos]); // Mélanger les vidéos
         let currentVideoIndex = 0; // Index de la vidéo actuelle
 
+        // Fonction pour mélanger un tableau
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+        
         // Fonction pour changer la vidéo
         function changeVideo() {
             const iframe = document.getElementById("video-player");
-            iframe.src = `https://player.vimeo.com/video/${videos[currentVideoIndex]}?loop=1&title=0&byline=0&portrait=0`;
+            iframe.src = `https://player.vimeo.com/video/${shuffledVideos[currentVideoIndex]}?loop=1&title=0&byline=0&portrait=0`;
         }
 
         // Fonction pour envoyer les données à Google Apps Script
         function submitWord() {
             const wordInput = document.getElementById("wordInput");
             const word = wordInput.value.trim();
-            const videoId = videos[currentVideoIndex];  // ID de la vidéo actuelle
+            const videoId = shuffledVideos[currentVideoIndex];  // ID de la vidéo actuelle
 
             if (word !== "") {
                 // Envoie les données à Google Apps Script
@@ -117,12 +127,16 @@
                 .then(data => {
                     console.log(data);  // Affiche la réponse du serveur
                     wordInput.value = ""; // Réinitialise le champ
-
+                   
+                    
                     // Passer à la vidéo suivante
-                    currentVideoIndex = (currentVideoIndex + 1) % videos.length;
-                    if (currentVideoIndex === 0) {
+                    currentVideoIndex++;
+                    if (currentVideoIndex >= shuffledVideos.length) {
                         alert("Toutes les vidéos ont été visionnées.");
+                        shuffledVideos = shuffleArray([...videos]); // Réinitialiser l'ordre
+                        currentVideoIndex = 0;
                     }
+
 
                     changeVideo();
                 })
