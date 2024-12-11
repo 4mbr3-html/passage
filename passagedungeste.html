@@ -64,10 +64,11 @@
     
     <h1>Passage d'un geste</h1>
 
-    <p>add protocole - mais en gros l'idée est d'écrire le mot qui vous vient en tête en visionnant la vidéo.<br> 
+    <p>protocole à préciser - mais en gros l'idée est d'écrire le mot qui vous vient en tête en visionnant la vidéo.<br> 
         ça peut être un élément visuel, une atmosphère, un sentiment, n'importe quoi qui vous traverse l'esprit. . ݁₊ ⊹ . ݁˖ . ݁</p>
-    <!-- Iframe pour afficher les vidéos YouTube -->
-    <iframe id="video-player" src="https://www.youtube.com/embed/PARgeNswNJM?rel=0&controls=0&modestbranding=1" frameborder="0" allowfullscreen></iframe>
+    
+  <!-- Iframe pour afficher les vidéos Vimeo -->
+    <iframe id="video-player" src="https://player.vimeo.com/video/1038237547?background=1&loop=1&title=0&byline=0&portrait=0" frameborder="0" allowfullscreen></iframe>
 
     <div>
         <input type="text" id="wordInput" placeholder="Entrez un mot">
@@ -75,18 +76,18 @@
     </div>
 
     <script>
-        // Liste des vidéos YouTube
+        // Liste des vidéos Vimeo
         const videos = [
-            "PARgeNswNJM?rel=0&controls=0&modestbranding=1", // Remplacez par l'ID de vos vidéos
-            "ffK9ZgNRHK4?rel=0&controls=0&modestbranding=1",
-            "joWdhcg1grc?rel=0&controls=0&modestbranding=1",
-            "f9lyz_bp-dA?rel=0&controls=0&modestbranding=1",
-            "GrhMOaZwYeI?rel=0&controls=0&modestbranding=1",
-            "_t1JiIkqFKY?rel=0&controls=0&modestbranding=1",
-            "qd7m36SkipA?rel=0&controls=0&modestbranding=1",
-            "EE8MyugdCAQ?rel=0&controls=0&modestbranding=1",
-            "Kk18VVHQQZk?rel=0&controls=0&modestbranding=1",
-            "g33gOBt2m7Q?rel=0&controls=0&modestbranding=1"
+            "1038237547", // Remplacez par l'ID de vos vidéos Vimeo
+            "1038237763",
+            "1038240385",
+            "1038240591",
+            "1038241081",
+            "1038241958",
+            "1038242060",
+            "1038242170",
+            "1038242448",
+            "1038242493"
         ];
 
         let currentVideoIndex = 0; // Index de la vidéo actuelle
@@ -94,7 +95,7 @@
         // Fonction pour changer la vidéo
         function changeVideo() {
             const iframe = document.getElementById("video-player");
-            iframe.src = `https://www.youtube.com/embed/${videos[currentVideoIndex]}`;
+            iframe.src = `https://player.vimeo.com/video/${videos[currentVideoIndex]}?background=1&loop=1&title=0&byline=0&portrait=0`;
         }
 
         // Fonction pour envoyer les données à Google Apps Script
