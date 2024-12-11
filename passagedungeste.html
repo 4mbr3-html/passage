@@ -130,11 +130,16 @@
         }
 
    // Permet d'écouter la touche "Entrée" sur le champ texte ***
-    document.getElementById("wordInput").addEventListener("keydown", function(event) {
-        if (event.key === "Enter") { // Vérifie si la touche pressée est "Entrée"
-            event.preventDefault(); // Empêche le comportement par défaut (soumission du formulaire)
-            document.getElementById("submitButton").click(); // Simule un clic sur le bouton
-        }
+     document.addEventListener("DOMContentLoaded", function() { 
+        const wordInput = document.getElementById("wordInput");
+        const submitButton = document.getElementById("submitButton");
+
+        wordInput.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") { // Vérifie si "Entrée" est pressée
+                event.preventDefault(); // Empêche le comportement par défaut
+                submitButton.click(); // Simule un clic sur le bouton
+            }
+        });
     });
         
         // Fonction pour envoyer les données à Google Apps Script
