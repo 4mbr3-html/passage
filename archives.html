@@ -9,10 +9,21 @@
 
     
    <style>
+       
+  /* Ajout des styles pour le body et l'iframe */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin: 20px;
+            margin: 0; /* Supprime la marge par défaut du body */
+            padding: 0; /* Supprime le padding par défaut du body */
+            height: 100vh; /* Prend toute la hauteur de la fenêtre */
+            overflow: hidden; /* Empêche le défilement */
+        }
+
+        iframe {
+            width: 100%; /* L'iframe occupe toute la largeur */
+            height: 100%; /* L'iframe occupe toute la hauteur */
+            border: none; /* Supprime la bordure de l'iframe */
         }
 
         footer {
