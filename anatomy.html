@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Anatomy of SF</title>
+
+    <!-- Ajouter l'icône avec le poisson dans l'onglet -->
+    <link rel="icon" href="data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><text x='0' y='14' font-size='14' fill='black'>🌀</text></svg>" type="image/svg+xml">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        iframe {
+            width: 480px;
+            height: 360px;
+            margin-bottom: 20px;
+        }
+   
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 160px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 98%;
+            text-align: right;
+            font-size: 10px;
+            color: #000000;
+            background-color: transparent;
+            padding: 10px 0;
+        }
+
+    </style>
+
+    <nav>
+        <a href="index.html">Index</a>  
+        <a href="passagedungeste.html">Passage d’un geste</a>  
+        <a href="archives.html">Archives</a>
+        <a href="anatomy.html">Anatomy of SF</a>
+    </nav>
+    
+</head>
+
+<body>
+    
+    <h1>Anatomy of SF</h1>
+
+    <p>écrivez en quelques mots, en une phrase votre idée de la fin du monde<br> 
+      
+
+    <div>
+        <input type="text" id="wordInput" placeholder="Votre idée de la fin du monde">
+        <button onclick="submitWord()">Entrer</button>
+
+    </div>
+
+ // Écouter "Entrée" dans le champ texte et exécuter la fonction du bouton
+    document.addEventListener("DOMContentLoaded", function() { 
+        const wordInput = document.getElementById("wordInput");
+
+        wordInput.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") { // Vérifie si "Entrée" est pressée
+                event.preventDefault(); // Empêche le comportement par défaut
+                submitWord(); // Appelle directement la fonction du bouton
+            }
+        });
+    });
+
+        
+        // Fonction pour envoyer les données à Google Apps Script
+        function submitWord() {
+            const wordInput = document.getElementById("wordInput");
+            const word = wordInput.value.trim();
+    
+
+            if (word !== "") {
+                // Envoie les données à Google Apps Script
+                fetch('https://script.google.com/macros/s/AKfycbxiZyPrnbfF5oWn7F1jqxe-JJqAHuB_qtoEaucuJN6o3vidntooaitBSiXB1vHFQqbmOw/exec', {
+                    method: 'POST',
+                    body: new URLSearchParams({
+                        'word': word
+                    })
+                })
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);  // Affiche la réponse du serveur
+                    wordInput.value = ""; // Réinitialise le champ
+                          
+            }
+        }
+
+    </script>
+    
+    <footer>
+        Ambre Guidicelli © ArTeC 2024
+    </footer>
+</body>
+</html>
