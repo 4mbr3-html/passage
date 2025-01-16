@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="fr">
-    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,7 +50,9 @@
         }
 
     </style>
+</head>
 
+<body>
     <nav>
         <a href="index.html">Index</a>  
         <a href="passagedungeste.html">Passage d’un geste</a>  
@@ -59,43 +60,37 @@
         <a href="anatomy.html">Anatomy of SF</a>
     </nav>
     
-</head>
-
-<body>
-    
     <h1>Anatomy of SF</h1>
 
-    <p>écrivez en quelques mots, en une phrase votre idée de la fin du monde<br> 
+    <p>Écrivez en quelques mots, en une phrase votre idée de la fin du monde<br> 
       
-
     <div>
         <input type="text" id="wordInput" placeholder="Votre idée de la fin du monde">
         <button onclick="submitWord()">Entrer</button>
-
     </div>
 
- // Écouter "Entrée" dans le champ texte et exécuter la fonction du bouton
-    document.addEventListener("DOMContentLoaded", function() { 
-        const wordInput = document.getElementById("wordInput");
+    <script>
+        // Écouter "Entrée" dans le champ texte et exécuter la fonction du bouton
+        document.addEventListener("DOMContentLoaded", function() { 
+            const wordInput = document.getElementById("wordInput");
 
-        wordInput.addEventListener("keydown", function(event) {
-            if (event.key === "Enter") { // Vérifie si "Entrée" est pressée
-                event.preventDefault(); // Empêche le comportement par défaut
-                submitWord(); // Appelle directement la fonction du bouton
-            }
+            wordInput.addEventListener("keydown", function(event) {
+                if (event.key === "Enter") { // Vérifie si "Entrée" est pressée
+                    event.preventDefault(); // Empêche le comportement par défaut
+                    submitWord(); // Appelle directement la fonction du bouton
+                }
+            });
         });
-    });
 
-        
         // Fonction pour envoyer les données à Google Apps Script
         function submitWord() {
             const wordInput = document.getElementById("wordInput");
             const word = wordInput.value.trim();
     
-
             if (word !== "") {
                 // Envoie les données à Google Apps Script
-                fetch('https://script.google.com/macros/s/AKfycbxiZyPrnbfF5oWn7F1jqxe-JJqAHuB_qtoEaucuJN6o3vidntooaitBSiXB1vHFQqbmOw/exec', {
+
+fetch('https://script.google.com/macros/s/AKfycbxiZyPrnbfF5oWn7F1jqxe-JJqAHuB_qtoEaucuJN6o3vidntooaitBSiXB1vHFQqbmOw/exec', {
                     method: 'POST',
                     body: new URLSearchParams({
                         'word': word
@@ -107,8 +102,15 @@
                     wordInput.value = ""; // Réinitialise le champ
                           
             }
-        }
 
+                })
+                .catch(error => {
+                    console.error("Erreur lors de l'envoi :", error);
+                });
+            } else {
+                alert("Veuillez écrire quelque chose avant de soumettre !");
+            }
+        }
     </script>
     
     <footer>
