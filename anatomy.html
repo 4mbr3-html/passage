@@ -86,11 +86,13 @@
         function submitWord() {
             const wordInput = document.getElementById("wordInput");
             const word = wordInput.value.trim();
-    
-            if (word !== "") {
-                // Envoie les données à Google Apps Script
 
-fetch('https://script.google.com/macros/s/AKfycbxiZyPrnbfF5oWn7F1jqxe-JJqAHuB_qtoEaucuJN6o3vidntooaitBSiXB1vHFQqbmOw/exec', {
+            if (word !== "") {
+                // Réinitialise immédiatement le champ pour permettre de taper un autre mot
+                wordInput.value = "";
+
+                // Envoie les données à Google Apps Script
+                fetch('https://script.google.com/macros/s/AKfycbxiZyPrnbfF5oWn7F1jqxe-JJqAHuB_qtoEaucuJN6o3vidntooaitBSiXB1vHFQqbmOw/exec', {
                     method: 'POST',
                     body: new URLSearchParams({
                         'word': word
@@ -99,10 +101,6 @@ fetch('https://script.google.com/macros/s/AKfycbxiZyPrnbfF5oWn7F1jqxe-JJqAHuB_qt
                 .then(response => response.text())
                 .then(data => {
                     console.log(data);  // Affiche la réponse du serveur
-                    wordInput.value = ""; // Réinitialise le champ
-                          
-            }
-
                 })
                 .catch(error => {
                     console.error("Erreur lors de l'envoi :", error);
