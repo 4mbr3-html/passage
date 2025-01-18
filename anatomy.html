@@ -88,7 +88,7 @@
             const word = wordInput.value.trim();
 
             if (word !== "") {
-                
+                wordInput.value = ""; // Réinitialise immédiatement le champ pour permettre de taper un autre mot
                 // Envoie les données à Google Apps Script
                 fetch('https://script.google.com/macros/s/AKfycby6o525G1YWx-uklZA5sScp_iYkmM873dKWOn3VzHxaeFCzwx7EEKAccPyvqNBXfPiA8g/exec', {
                     method: 'POST',
@@ -99,7 +99,7 @@
                 .then(response => response.text())
                 .then(data => {
                     console.log(data); // Affiche la réponse du serveur
-                     wordInput.value = ""; // Réinitialise immédiatement le champ pour permettre de taper un autre mot
+                     
                 })
                 .catch(error => {
                     console.error('Erreur', error);
