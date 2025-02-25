@@ -6,18 +6,30 @@
     <title>Passage d'un geste</title>
     <link rel="stylesheet" href="styles.css"> <!-- Conserver le style du site -->
     <script>
-        async function fetchWords() {
-            try {
-                let response = await fetch('https://docs.google.com/spreadsheets/d/1EHIHGgHhNKK5Y-rDjrAt6oFkjObFGVquqZb9utgCRD0/gviz/tq?tqx=out:json');
-                let text = await response.text();
-                let json = JSON.parse(text.substring(47, text.length - 2));
-                let words = new Set();
-                json.table.rows.forEach(row => words.add(row.c[0].v.toLowerCase()));
-                populateSelect(Array.from(words));
-            } catch (error) {
-                console.error("Erreur lors du chargement des mots", error);
+       async function fetchWords() {
+    try {
+        let response = await fetch('https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/gviz/tq?tqx=out:json');
+        let text = await response.text();
+        let json = JSON.parse(text.substring(47, text.length - 2));
+
+        let videoData = {}; // Dictionnaire pour stocker les mots et les IDs Vimeo
+        
+        json.table.rows.forEach(row => {
+            let word = row.c[0]?.v?.toLowerCase(); // Récupère le mot (colonne A)
+            let videoId = row.c[1]?.v; // Récupère l'ID Vimeo (colonne B)
+            if (word && videoId) {
+                if (!videoData[word]) videoData[word] = [];
+                videoData[word].push(`https://player.vimeo.com/video/${videoId}`);
             }
-        }
+        });
+
+        console.log(videoData); // Vérifie que les données sont bien récupérées
+        populateSelect(Object.keys(videoData)); // Remplit la liste déroulante
+    } catch (error) {
+        console.error("Erreur lors du chargement des mots", error);
+    }
+}
+
 
         function populateSelect(words) {
             let select = document.getElementById("wordSelect");
