@@ -69,7 +69,7 @@
 
         async function fetchWords() {
             try {
-                let response = await fetch('https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/gviz/tq?tqx=out:json');
+                let response = await fetch('https://docs.google.com/spreadsheets/d/1EHIHGgHhNKK5Y-rDjrAt6oFkjObFGVquqZb9utgCRD0/gviz/tq?tqx=out:json');
                 let text = await response.text();
                 let json = JSON.parse(text.substring(47, text.length - 2));
 
