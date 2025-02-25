@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
-            background-color: white; /* Fond blanc */
+            background-color: white;
             color: black;
             text-align: center;
             font-family: Arial, sans-serif;
@@ -19,26 +19,28 @@
             top: 10px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 10; /* Garde les contrôles au-dessus des vidéos */
-            background: rgba(255, 255, 255, 0.8); /* Fond semi-transparent */
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.8);
             padding: 10px;
             border-radius: 10px;
+            width: auto;
+            max-width: 90%;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 10px;
-            width: 80%;
+            gap: 5px;
         }
 
         .word-button {
             background-color: black;
             color: white;
             border: none;
-            padding: 10px 15px;
-            font-size: 16px;
+            padding: 5px 10px;
+            font-size: 12px;
             cursor: pointer;
             border-radius: 5px;
             transition: background 0.3s ease-in-out;
+            white-space: nowrap;
         }
 
         .word-button:hover {
@@ -65,13 +67,13 @@
 <body>
 
     <div id="controls-container">
-        <h1>Passage d'un geste</h1>
+        <h1 style="font-size: 18px; margin-bottom: 5px;">Passage d'un geste</h1>
     </div>
 
     <div id="video-container"></div>
 
     <script>
-        let videoData = {}; // Dictionnaire pour stocker les mots et les vidéos associées
+        let videoData = {}; // Dictionnaire pour stocker les mots et vidéos
 
         async function fetchWords() {
             try {
@@ -80,19 +82,23 @@
                 let json = JSON.parse(text.substring(47, text.length - 2));
 
                 json.table.rows.forEach(row => {
-                    let word = row.c[0]?.v?.toLowerCase(); // Colonne A = Mot
-                    let videoId = row.c[1]?.v; // Colonne B = ID Vimeo
+                    let word = row.c[0]?.v?.toLowerCase().trim(); // Normalisation du mot
+                    let videoId = row.c[1]?.v;
 
                     if (word && videoId) {
-                        if (!videoData[word]) videoData[word] = [];
-                        videoData[word].push(`https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&loop=1&background=1`);
+                        if (!videoData[word]) videoData[word] = new Set();
+                        videoData[word].add(`https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&loop=1&background=1`);
                     }
                 });
 
-                console.log(videoData); // Vérification dans la console
-                displayWordButtons(Object.keys(videoData)); // Afficher les mots sous forme de boutons
+                // Convertir Set en tableau (évite les doublons)
+                Object.keys(videoData).forEach(word => {
+                    videoData[word] = Array.from(videoData[word]);
+                });
 
-                // 🔥 Lancement automatique des vidéos associées au premier mot
+                console.log(videoData); // Vérification
+                displayWordButtons(Object.keys(videoData));
+
                 if (Object.keys(videoData).length > 0) {
                     playVideosForWord(Object.keys(videoData)[0]);
                 }
@@ -104,6 +110,7 @@
 
         function displayWordButtons(words) {
             let container = document.getElementById("controls-container");
+            container.innerHTML = ""; // Nettoyer avant d'ajouter
 
             words.forEach(word => {
                 let button = document.createElement("button");
@@ -122,17 +129,16 @@
                 let iframe = document.createElement("iframe");
                 iframe.src = videoSrc;
                 iframe.allow = "autoplay; fullscreen";
-                iframe.style.width = Math.random() * 30 + 30 + "vw"; // Taille aléatoire entre 30% et 60%
-                iframe.style.height = Math.random() * 20 + 20 + "vh"; // Hauteur aléatoire entre 20% et 40%
-                iframe.style.left = Math.random() * 70 + "vw"; // Placement horizontal aléatoire
-                iframe.style.top = Math.random() * 70 + "vh"; // Placement vertical aléatoire
-                iframe.style.opacity = Math.random() * 0.3 + 0.7; // Opacité entre 0.7 et 1
+                iframe.style.width = Math.random() * 30 + 30 + "vw";
+                iframe.style.height = Math.random() * 20 + 20 + "vh";
+                iframe.style.left = Math.random() * 70 + "vw";
+                iframe.style.top = Math.random() * 70 + "vh";
+                iframe.style.opacity = Math.random() * 0.3 + 0.7;
 
                 container.appendChild(iframe);
 
-                // Supprime la vidéo après 10 secondes
                 setTimeout(() => {
-                    iframe.style.opacity = "0"; // Disparition progressive
+                    iframe.style.opacity = "0";
                     setTimeout(() => iframe.remove(), 2000);
                 }, 10000);
             });
