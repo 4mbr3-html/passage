@@ -3,15 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Passage d'un geste</title>
+    <title>Les interstices</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
-            background-color: black;
-            color: white;
+            background-color: white; /* Fond blanc */
+            color: black;
             text-align: center;
             font-family: Arial, sans-serif;
             overflow: hidden;
+        }
+
+        #controls-container {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10; /* Garde les contrôles au-dessus des vidéos */
+            background: rgba(255, 255, 255, 0.8); /* Fond semi-transparent */
+            padding: 10px;
+            border-radius: 10px;
         }
 
         #video-container {
@@ -26,7 +37,8 @@
 
         iframe {
             position: absolute;
-            transition: opacity 2s ease-in-out, transform 1s ease-in-out;
+            transition: opacity 2s ease-in-out;
+            border: none;
         }
 
         input, select, button {
@@ -38,15 +50,17 @@
 </head>
 <body>
 
-    <h1>Passage d'un geste</h1>
-    <p>Entrez un mot ou choisissez dans la liste :</p>
+    <div id="controls-container">
+        <h1>Les interstices</h1>
+        <p>Entrez un mot ou choisissez dans la liste :</p>
 
-    <input type="text" id="wordInput" placeholder="Entrez un mot">
-    <button onclick="submitWord()">Entrer</button>
+        <input type="text" id="wordInput" placeholder="Entrez un mot">
+        <button onclick="submitWord()">Entrer</button>
 
-    <select id="wordSelect" onchange="selectWord()">
-        <option value="">-- Chargement des mots... --</option>
-    </select>
+        <select id="wordSelect" onchange="selectWord()">
+            <option value="">-- Chargement des mots... --</option>
+        </select>
+    </div>
 
     <div id="video-container"></div>
 
@@ -55,7 +69,7 @@
 
         async function fetchWords() {
             try {
-                let response = await fetch('https://docs.google.com/spreadsheets/d/1EHIHGgHhNKK5Y-rDjrAt6oFkjObFGVquqZb9utgCRD0/gviz/tq?tqx=out:json');
+                let response = await fetch('https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/gviz/tq?tqx=out:json');
                 let text = await response.text();
                 let json = JSON.parse(text.substring(47, text.length - 2));
 
@@ -65,12 +79,17 @@
 
                     if (word && videoId) {
                         if (!videoData[word]) videoData[word] = [];
-                        videoData[word].push(`https://player.vimeo.com/video/${videoId}`);
+                        videoData[word].push(`https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&loop=1`);
                     }
                 });
 
                 console.log(videoData); // Vérification dans la console
                 populateSelect(Object.keys(videoData)); // Remplit la liste déroulante
+
+                // 🔥 Lancement automatique des vidéos associées au premier mot
+                if (Object.keys(videoData).length > 0) {
+                    playVideosForWord(Object.keys(videoData)[0]);
+                }
 
             } catch (error) {
                 console.error("Erreur lors du chargement des mots", error);
@@ -99,7 +118,7 @@
         }
 
         function playVideosForWord(word) {
-            if (!videoData[word]) return; // Vérifie si des vidéos existent pour ce mot
+            if (!videoData[word]) return;
             const container = document.getElementById("video-container");
 
             videoData[word].forEach(videoSrc => {
@@ -111,7 +130,6 @@
                 iframe.style.left = Math.random() * 70 + "vw"; // Placement horizontal aléatoire
                 iframe.style.top = Math.random() * 70 + "vh"; // Placement vertical aléatoire
                 iframe.style.opacity = Math.random() * 0.6 + 0.4; // Opacité aléatoire (0.4 à 1)
-                iframe.style.transform = `rotate(${Math.random() * 20 - 10}deg)`; // Rotation légère (-10° à 10°)
 
                 container.appendChild(iframe);
 
