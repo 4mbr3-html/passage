@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passage d'un geste</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Conserver le style du site -->
+    <script>
+        async function fetchWords() {
+            try {
+                let response = await fetch('https://docs.google.com/spreadsheets/d/1EHIHGgHhNKK5Y-rDjrAt6oFkjObFGVquqZb9utgCRD0/gviz/tq?tqx=out:json');
+                let text = await response.text();
+                let json = JSON.parse(text.substring(47, text.length - 2));
+                let words = new Set();
+                json.table.rows.forEach(row => words.add(row.c[0].v.toLowerCase()));
+                populateSelect(Array.from(words));
+            } catch (error) {
+                console.error("Erreur lors du chargement des mots", error);
+            }
+        }
+
+        function populateSelect(words) {
+            let select = document.getElementById("wordSelect");
+            select.innerHTML = '<option value="">-- Choisissez un mot --</option>';
+            words.forEach(word => {
+                let option = document.createElement("option");
+                option.value = word;
+                option.textContent = word;
+                select.appendChild(option);
+            });
+        }
+
+        function submitWord() {
+            const word = document.getElementById("wordInput").value.trim().toLowerCase();
+            playVideosForWord(word);
+        }
+
+        function selectWord() {
+            const word = document.getElementById("wordSelect").value;
+            playVideosForWord(word);
+        }
+
+        function playVideosForWord(word) {
+            let videoSrc = `https://player.vimeo.com/video/${word}`;
+            playVideo(videoSrc);
+        }
+
+        function playVideo(videoSrc) {
+            const container = document.getElementById("video-container");
+            let iframe = document.createElement("iframe");
+            iframe.src = videoSrc;
+            iframe.allow = "autoplay; fullscreen";
+            iframe.style.left = Math.random() * 70 + "vw";
+            iframe.style.top = Math.random() * 70 + "vh";
+            iframe.style.opacity = Math.random() * 0.8 + 0.2;
+            container.appendChild(iframe);
+            setTimeout(() => { iframe.style.opacity = "0"; setTimeout(() => iframe.remove(), 2000); }, 10000);
+        }
+
+        document.addEventListener("DOMContentLoaded", fetchWords);
+    </script>
+</head>
+<body>
+    <h1>Passage d'un geste</h1>
+    <p>Écrivez un mot ou choisissez dans la liste :</p>
+    <input type="text" id="wordInput" placeholder="Entrez un mot">
+    <button onclick="submitWord()">Entrer</button>
+    <select id="wordSelect" onchange="selectWord()">
+        <option value="">-- Chargement des mots... --</option>
+    </select>
+    <div id="video-container"></div>
+</body>
+</html>
