@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les interstices</title>
+    <title>Passage d'un geste</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
@@ -23,6 +23,26 @@
             background: rgba(255, 255, 255, 0.8); /* Fond semi-transparent */
             padding: 10px;
             border-radius: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            width: 80%;
+        }
+
+        .word-button {
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .word-button:hover {
+            background-color: gray;
         }
 
         #video-container {
@@ -40,26 +60,12 @@
             transition: opacity 2s ease-in-out;
             border: none;
         }
-
-        input, select, button {
-            margin: 10px;
-            padding: 10px;
-            font-size: 16px;
-        }
     </style>
 </head>
 <body>
 
     <div id="controls-container">
-        <h1>Les interstices</h1>
-        <p>Entrez un mot ou choisissez dans la liste :</p>
-
-        <input type="text" id="wordInput" placeholder="Entrez un mot">
-        <button onclick="submitWord()">Entrer</button>
-
-        <select id="wordSelect" onchange="selectWord()">
-            <option value="">-- Chargement des mots... --</option>
-        </select>
+        <h1>Passage d'un geste</h1>
     </div>
 
     <div id="video-container"></div>
@@ -79,12 +85,12 @@
 
                     if (word && videoId) {
                         if (!videoData[word]) videoData[word] = [];
-                        videoData[word].push(`https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&loop=1`);
+                        videoData[word].push(`https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&loop=1&background=1`);
                     }
                 });
 
                 console.log(videoData); // Vérification dans la console
-                populateSelect(Object.keys(videoData)); // Remplit la liste déroulante
+                displayWordButtons(Object.keys(videoData)); // Afficher les mots sous forme de boutons
 
                 // 🔥 Lancement automatique des vidéos associées au premier mot
                 if (Object.keys(videoData).length > 0) {
@@ -96,25 +102,16 @@
             }
         }
 
-        function populateSelect(words) {
-            let select = document.getElementById("wordSelect");
-            select.innerHTML = '<option value="">-- Choisissez un mot --</option>';
+        function displayWordButtons(words) {
+            let container = document.getElementById("controls-container");
+
             words.forEach(word => {
-                let option = document.createElement("option");
-                option.value = word;
-                option.textContent = word;
-                select.appendChild(option);
+                let button = document.createElement("button");
+                button.className = "word-button";
+                button.textContent = word;
+                button.onclick = () => playVideosForWord(word);
+                container.appendChild(button);
             });
-        }
-
-        function submitWord() {
-            const word = document.getElementById("wordInput").value.trim().toLowerCase();
-            if (word) playVideosForWord(word);
-        }
-
-        function selectWord() {
-            const word = document.getElementById("wordSelect").value;
-            if (word) playVideosForWord(word);
         }
 
         function playVideosForWord(word) {
@@ -129,7 +126,7 @@
                 iframe.style.height = Math.random() * 20 + 20 + "vh"; // Hauteur aléatoire entre 20% et 40%
                 iframe.style.left = Math.random() * 70 + "vw"; // Placement horizontal aléatoire
                 iframe.style.top = Math.random() * 70 + "vh"; // Placement vertical aléatoire
-                iframe.style.opacity = Math.random() * 0.6 + 0.4; // Opacité aléatoire (0.4 à 1)
+                iframe.style.opacity = Math.random() * 0.3 + 0.7; // Opacité entre 0.7 et 1
 
                 container.appendChild(iframe);
 
