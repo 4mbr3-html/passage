@@ -140,8 +140,12 @@
             
         ];
 
-        let shuffledVideos = shuffleArray([...videos]); // Mélanger les vidéos
-        let currentVideoIndex = 0; // Index de la vidéo actuelle
+	let shuffledVideos = shuffleArray([...videos]); // Mélanger les vidéos
+	let currentVideoIndex = Math.floor(Math.random() * videos.length); // Choisir un index aléatoire
+
+	document.addEventListener("DOMContentLoaded", function() { 
+    	changeVideo(); // Charge la vidéo aléatoire dès le début
+	});
 
         // Fonction pour mélanger un tableau
         function shuffleArray(array) {
