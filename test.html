@@ -200,7 +200,7 @@
             model.detect(video).then(predictions => {
                 if (predictions.length > 0) {
                     let hand = predictions[0];
-                    let x = window.innerWidth - (hand.bbox[0] + hand.bbox[2] / 2); 
+                    let x = hand.bbox[0] + hand.bbox[2] / 2;
                     let y = hand.bbox[1] + hand.bbox[3] / 2;
                     
                     document.querySelectorAll(".word").forEach(word => {
