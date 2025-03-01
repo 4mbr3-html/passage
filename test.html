@@ -143,6 +143,30 @@
             }
         }
 
+            function playVideosForWord(word) {
+            if (!videoData[word]) return;
+            const container = document.getElementById("video-container");
+
+            videoData[word].forEach(videoSrc => {
+                let iframe = document.createElement("iframe");
+                iframe.src = videoSrc;
+                iframe.allow = "autoplay; fullscreen";
+                iframe.style.width = Math.random() * 30 + 30 + "vw";
+                iframe.style.height = Math.random() * 20 + 20 + "vh";
+                iframe.style.left = Math.random() * 70 + "vw";
+                iframe.style.top = Math.random() * 70 + "vh";
+                iframe.style.opacity = Math.random() * 0.3 + 0.7;
+
+                container.appendChild(iframe);
+
+                setTimeout(() => {
+                    iframe.style.opacity = "0";
+                    setTimeout(() => iframe.remove(), 2000);
+                }, 10000);
+            });
+        }
+
+
         function displayWordCloud(words) {
             let cloud = document.getElementById("word-cloud");
             cloud.innerHTML = "";
@@ -169,6 +193,8 @@
                 });
             });
         }
+
+    
 
         function detectHand(model) {
             model.detect(video).then(predictions => {
