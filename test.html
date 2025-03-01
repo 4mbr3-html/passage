@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passage d'un geste</title>
+
+    <!-- Ajouter l'icône avec le poisson dans l'onglet -->
+    <link rel="icon" href="data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><text x='0' y='14' font-size='14' fill='black'>📀</text></svg>" type="image/svg+xml">
+
+    <script src="https://cdn.jsdelivr.net/npm/handtrackjs@latest/dist/handtrack.min.js"></script>
+    
+    <style>
+        body {
+            background-color: white;
+            color: black;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            margin: 20px;
+        }
+
+        nav {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 50px;
+            justify-content: center;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        a:visited {
+            color: black;
+            text-decoration: none;
+        }
+
+        #word-cloud {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .word {
+            position: absolute;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+            display: inline-block;
+            padding: 5px;
+        }
+
+        .word:hover, .highlight {
+            transform: scale(1.2);
+            background-color: yellow;
+        }
+
+        #video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        iframe {
+            position: absolute;
+            transition: opacity 2s ease-in-out;
+            border: none;
+        }
+
+        video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 300px;
+            opacity: 0.5;
+        }
+
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 98%;
+            text-align: right;
+            font-size: 10px;
+            color: #000000;
+            background-color: transparent;
+            padding: 10px 0;
+        }
+    </style>
+
+    <nav>
+        <a href="index.html">Index</a>
+        <a href="passagedungeste.html">Passage d’un geste</a>
+        <a href="lesinterstices.html">Les interstices</a>
+    </nav>
+</head>
+<body>
+
+    <video id="video" autoplay></video>
+    <div id="word-cloud"></div>
+    <div id="video-container"></div>
+
+    <script>
+        let video = document.getElementById("video");
+        let videoData = {};
+
+        async function fetchWords() {
+            try {
+                let response = await fetch('https://docs.google.com/spreadsheets/d/1EHIHGgHhNKK5Y-rDjrAt6oFkjObFGVquqZb9utgCRD0/gviz/tq?tqx=out:json&gid=0');
+                let text = await response.text();
+                let json = JSON.parse(text.substring(47, text.length - 2));
+
+                json.table.rows.forEach(row => {
+                    let word = row.c[0]?.v?.toLowerCase().trim();
+                    let videoId = row.c[1]?.v;
+
+                    if (word && videoId) {
+                        if (!videoData[word]) videoData[word] = new Set();
+                        videoData[word].add(`https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&loop=1&background=1`);
+                    }
+                });
+
+                Object.keys(videoData).forEach(word => {
+                    videoData[word] = Array.from(videoData[word]);
+                });
+
+                displayWordCloud(Object.keys(videoData));
+                initHandTracking();
+            } catch (error) {
+                console.error("Erreur lors du chargement des mots", error);
+            }
+        }
+
+        function displayWordCloud(words) {
+            let cloud = document.getElementById("word-cloud");
+            cloud.innerHTML = "";
+
+            words.forEach(word => {
+                let span = document.createElement("span");
+                span.className = "word";
+                span.textContent = word;
+                span.style.left = Math.random() * 80 + "vw";
+                span.style.top = Math.random() * 80 + "vh";
+                span.style.fontSize = Math.random() * 10 + 15 + "px";
+                span.style.opacity = Math.random() * 0.6 + 0.4;
+                span.onclick = () => playVideosForWord(word);
+                cloud.appendChild(span);
+            });
+        }
+
+        function initHandTracking() {
+            handTrack.load().then(model => {
+                handTrack.startVideo(video).then(status => {
+                    if (status) {
+                        detectHand(model);
+                    }
+                });
+            });
+        }
+
+        function detectHand(model) {
+            model.detect(video).then(predictions => {
+                if (predictions.length > 0) {
+                    let hand = predictions[0];
+                    let x = hand.bbox[0] + hand.bbox[2] / 2;
+                    let y = hand.bbox[1] + hand.bbox[3] / 2;
+                    
+                    document.querySelectorAll(".word").forEach(word => {
+                        let rect = word.getBoundingClientRect();
+                        if (x > rect.left && x < rect.right && y > rect.top && y < rect.bottom) {
+                            word.classList.add("highlight");
+                            if (!word.clicked) {
+                                word.clicked = true;
+                                word.click();
+                            }
+                        } else {
+                            word.classList.remove("highlight");
+                            word.clicked = false;
+                        }
+                    });
+                }
+                requestAnimationFrame(() => detectHand(model));
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", fetchWords);
+    </script>
+
+    <footer>
+        Ambre Guidicelli © ArTeC 2025
+    </footer>
+</body>
+</html>
