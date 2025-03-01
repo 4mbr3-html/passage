@@ -84,6 +84,7 @@
             left: 0;
             width: 300px;
             opacity: 0.5;
+            transform: scaleX(-1); /* Effet miroir */
         }
 
         footer {
@@ -173,7 +174,7 @@
             model.detect(video).then(predictions => {
                 if (predictions.length > 0) {
                     let hand = predictions[0];
-                    let x = hand.bbox[0] + hand.bbox[2] / 2;
+                    let x = window.innerWidth - (hand.bbox[0] + hand.bbox[2] / 2); 
                     let y = hand.bbox[1] + hand.bbox[3] / 2;
                     
                     document.querySelectorAll(".word").forEach(word => {
@@ -182,7 +183,7 @@
                             word.classList.add("highlight");
                             if (!word.clicked) {
                                 word.clicked = true;
-                                word.click();
+                                word.dispatchEvent(new Event('click'));
                             }
                         } else {
                             word.classList.remove("highlight");
