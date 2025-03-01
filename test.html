@@ -183,7 +183,7 @@
                             word.classList.add("highlight");
                             if (!word.clicked) {
                                 word.clicked = true;
-                                word.dispatchEvent(new Event('click'));
+                                playVideosForWord(word.textContent);
                             }
                         } else {
                             word.classList.remove("highlight");
