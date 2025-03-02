@@ -186,6 +186,10 @@
         
         // Fonction pour changer la vidéo
         function changeVideo() {
+	  if (shuffledVideos.length === 0) {
+              shuffledVideos = shuffleArray([...videos]); // Réinitialisation complète
+              currentVideoIndex = 0;
+        }	
             const iframe = document.getElementById("video-player");
             iframe.src = `https://player.vimeo.com/video/${shuffledVideos[currentVideoIndex]}?autoplay=1&loop=1&title=0&byline=0&portrait=0`;
         }
@@ -224,13 +228,24 @@
                     wordInput.value = ""; // Réinitialise le champ
                    
                     
-                    // Passer à la vidéo suivante
-                    currentVideoIndex++;
-                    if (currentVideoIndex >= shuffledVideos.length) {
-                        alert("Toutes les vidéos ont été visionnées.");
-                        shuffledVideos = shuffleArray([...videos]); // Réinitialiser l'ordre
-                        currentVideoIndex = 0;
-                    }
+
+                           // Supprimer la vidéo actuelle de la liste
+                shuffledVideos.splice(currentVideoIndex, 1); 
+
+                // Vérifier s'il reste des vidéos à visionner
+                if (shuffledVideos.length === 0) {
+                    alert("Toutes les vidéos ont été visionnées.");
+                    shuffledVideos = shuffleArray([...videos]); // Réinitialiser les vidéos
+                }
+
+			// Éviter une erreur si la liste est vide avant de choisir un nouvel index
+		if (shuffledVideos.length > 0) {
+    		currentVideoIndex = Math.floor(Math.random() * shuffledVideos.length);
+    		changeVideo();
+		}
+
+                // Choisir une nouvelle vidéo au hasard dans la liste restante
+                currentVideoIndex = Math.floor(Math.random() * shuffledVideos.length);
 
 
                     changeVideo();
