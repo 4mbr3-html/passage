@@ -1,94 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
-    
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>start</title>
-
-    <link rel="icon" href="data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><text x='0' y='14' font-size='14' fill='black'>🌐</text></svg>" type="image/svg+xml">
-
-    <script type="text/javascript">
-        var motDePasse = "p4ss4g3"; // Le mot de passe ici
-        
-        // Vérifier si le mot de passe a déjà été validé
-        if (localStorage.getItem("motDePasseValide") !== "true") {
-            var utilisateur = prompt("Entrez le mot de passe:");
-            
-            if (utilisateur !== motDePasse) {
-                alert("Mot de passe incorrect");
-                window.location.href = "index.html"; // Redirection si mot de passe incorrect
-            } else {
-                // Si le mot de passe est correct, mémoriser la validation
-                localStorage.setItem("motDePasseValide", "true");
-            }
-        }
-    </script>
-
-    
-    <style>
-
-        nav {
-		margin-bottom: 30px; /* Ajoute un espace sous la barre de navigation */
-		display: flex;
-		gap: 50px; /* Ajoute un espace entre les liens */
-		justify-content: center; /* Centre les liens */
-
-        }
-        
-        body {
-		font-family: Arial, sans-serif;
-		text-align: center;
-		margin: 20px;
-        }
-
-	      a {
-            text-decoration: none; /* Enlève le soulignement des liens */
-            color: black; /* Définit la couleur des liens */
-        }
-
-        a:visited {
-            color: black; /* Garde la couleur noire même après clic */
-            text-decoration: none; /* Supprime le soulignement après visite */
-        }
-
-        footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 98%;
-            text-align: right;
-            font-size: 10px;
-            color: #000000;
-            background-color: transparent;
-            padding: 10px 0;
-        }
-    </style>
-
-       <nav>
-<a href="index.html">Index</a>  
-<a href="passagedungeste.html">Passage d’un geste</a> 
-<a href="lesinterstices.html">Les interstices</a>
-<a href="test.html">Test</a> 
-
-    </nav>
+  <meta charset="UTF-8">
+  <title>365 Days Project</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
-    
 <body>
-
-       <h1>         </h1>
-	
-<div id="start.head.173315123959" class="text resizable object" style="background-color: rgb(255, 5, 238); height: 21px; left: 208px; opacity: 1; position: absolute; top: 78px; width: 55px; z-index: 100;">
-		bonjour ⭑.ᐟ <br>
-	</div>
-	<div id="start.head.173315136822" class="text resizable object" style="background-color: rgb(255, 0, 255); height: 100px; left: 293px; position: absolute; top: 81px; width: 100px; z-index: 100;">
-	</div>
-
-    
-        <!-- Footer -->
-    <footer>
-        Ambre Guidicelli © ArTeC 2025
-    </footer>
-
+  <h1>365 Days Project</h1>
+  <p><a href="janvier.html">Voir Janvier</a></p>
 </body>
 </html>
